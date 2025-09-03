@@ -61,6 +61,8 @@ public class SortedCollection {
 	 */
 	public static void main(String[] args) {
 		SortedCollection collection = new SortedCollection();
+		collection.list = new ArrayList<Integer>();
+		
 		if (args.length == 0) {
 			showUsage();
 			return;
@@ -68,7 +70,7 @@ public class SortedCollection {
 		
 		// TODO: add numbers in commandline arguments to collection using the add(int) method.
 		// If any commandline argument is not a number, call showUsage() and return.
-		collection.list = new ArrayList<Integer>();
+		
 		
 		for (int i = 0; i < args.length; i++) {
 			try {
