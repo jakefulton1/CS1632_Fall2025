@@ -7,6 +7,10 @@ import java.util.ListIterator;
 public class SortedCollection {
 	// TODO: Add member variables or methods as needed
 	private ArrayList<Integer> list;
+	
+	public SortedCollection() {
+		this.list = new ArrayList<Integer>(); 
+	}
 	/**
 	 * Adds the number n to the collection.
 	 * 
@@ -61,8 +65,7 @@ public class SortedCollection {
 	 */
 	public static void main(String[] args) {
 		SortedCollection collection = new SortedCollection();
-		collection.list = new ArrayList<Integer>();
-		
+
 		if (args.length == 0) {
 			showUsage();
 			return;
