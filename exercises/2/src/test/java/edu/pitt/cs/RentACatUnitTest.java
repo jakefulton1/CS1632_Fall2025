@@ -133,7 +133,9 @@ public class RentACatUnitTest {
 	public void testGetCatNumCats3() {
 		// TODO: Fill in
 		try {
+		when(c1.getId()).thenReturn(1);
 		when(c2.getId()).thenReturn(2);
+		when(c3.getId()).thenReturn(3);
 		Method getCat = r.getClass().getDeclaredMethod("getCat", int.class);
 		getCat.setAccessible(true);
 		r.addCat(c1);
@@ -178,6 +180,9 @@ public class RentACatUnitTest {
 	@Test
 	public void testListCatsNumCats3() {
 		// TODO: Fill in
+		when(c1.getId()).thenReturn(1);
+		when(c2.getId()).thenReturn(2);
+		when(c3.getId()).thenReturn(3);
 		when(c1.toString()).thenReturn("ID 1. Jennyanydots");
 		when(c2.toString()).thenReturn("ID 2. Old Deuteronomy");
 		when(c3.toString()).thenReturn("ID 3. Mistoffelees");
@@ -206,7 +211,9 @@ public class RentACatUnitTest {
 	@Test
 	public void testRenameFailureNumCats0() {
 		// TODO: Fill in
+		when(c1.getId()).thenReturn(1);
 		when(c2.getId()).thenReturn(2);
+		when(c3.getId()).thenReturn(3);
 		when(c2.getName()).thenReturn("Old Deuteronomy");
 		boolean ret = r.renameCat(2, "Garfield");
 		assertFalse(ret);
@@ -231,7 +238,9 @@ public class RentACatUnitTest {
 	@Test
 	public void testRenameNumCat3() {
 		// TODO: Fill in
+		when(c1.getId()).thenReturn(1);
 		when(c2.getId()).thenReturn(2);
+		when(c3.getId()).thenReturn(3);
 		when(c2.getName()).thenReturn("Old Deuteronomy");
 		r.addCat(c1);
 		r.addCat(c2);
@@ -259,8 +268,10 @@ public class RentACatUnitTest {
 	@Test
 	public void testRentCatNumCats3() {
 		// TODO: Fill in
-		when(c2.getRented()).thenReturn(false);
+		when(c1.getId()).thenReturn(1);
 		when(c2.getId()).thenReturn(2);
+		when(c3.getId()).thenReturn(3);
+		when(c2.getRented()).thenReturn(false);
 		when(c2.getName()).thenReturn("Old Deuteronomy");
 		r.addCat(c1);
 		r.addCat(c2);
@@ -290,9 +301,11 @@ public class RentACatUnitTest {
 	@Test
 	public void testRentCatFailureNumCats3() {
 		// TODO: Fill in
+		when(c1.getId()).thenReturn(1);
+		when(c2.getId()).thenReturn(2);
+		when(c3.getId()).thenReturn(3);
 		r.addCat(c1);
 		when(c2.getRented()).thenReturn(true);
-		when(c2.getId()).thenReturn(2);
 		when(c2.getName()).thenReturn("Old Deuteronomy");
 		r.addCat(c2);
 		r.addCat(c3);
@@ -321,9 +334,11 @@ public class RentACatUnitTest {
 	@Test
 	public void testReturnCatNumCats3() {
 		// TODO: Fill in
+		when(c1.getId()).thenReturn(1);
+		when(c2.getId()).thenReturn(2);
+		when(c3.getId()).thenReturn(3);
 		r.addCat(c1);
 		when(c2.getRented()).thenReturn(true);
-		when(c2.getId()).thenReturn(2);
 		when(c2.getName()).thenReturn("Old Deuteronomy");
 		r.addCat(c2);
 		r.addCat(c3);
@@ -352,8 +367,10 @@ public class RentACatUnitTest {
 	@Test
 	public void testReturnFailureCatNumCats3() {
 		// TODO: Fill in
-		when(c2.getRented()).thenReturn(false);
+		when(c1.getId()).thenReturn(1);
 		when(c2.getId()).thenReturn(2);
+		when(c3.getId()).thenReturn(3);
+		when(c2.getRented()).thenReturn(false);
 		when(c2.getName()).thenReturn("Old Deuteronomy");
 		r.addCat(c1);
 		r.addCat(c2);
