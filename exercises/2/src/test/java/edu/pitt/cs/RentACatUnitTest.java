@@ -52,15 +52,19 @@ public class RentACatUnitTest {
 		// Which type is the correct choice for this unit test?  Again, I'll leave it up to you.
 		// TODO: Fill in
 		c1 = Cat.createInstance(InstanceType.MOCK, 1, "Jennyanydots"); 
-							//I would use a mock as indicated in lecture, but I've 
-		//already determined that I can trust the contents of Cat objects in CatUnitTest
+		when(c1.getId()).thenReturn(1);
+		when(c1.getName()).thenReturn("Jennyanydots");
 
 		// 3. Create a Cat with ID 2 and name "Old Deuteronomy", assign to c2 using a call to Cat.createInstance(InstanceType, int, String).
 		// TODO: Fill in
 		c2 = Cat.createInstance(InstanceType.MOCK, 2, "Old Deuteronomy");
+		when(c2.getId()).thenReturn(2);
+		when(c2.getName()).thenReturn("Old Deuteronomy");
 		// 4. Create a Cat with ID 3 and name "Mistoffelees", assign to c3 using a call to Cat.createInstance(InstanceType, int, String).
 		// TODO: Fill in
 		c3 = Cat.createInstance(InstanceType.MOCK, 3, "Mistoffelees");
+		when(c3.getId()).thenReturn(3);
+		when(c3.getName()).thenReturn("Mistoffelees");
 		// 5. Redirect system output from stdout to the "out" stream
 		// First, make a back up of System.out (which is the stdout to the console)
 		stdout = System.out;
@@ -133,9 +137,6 @@ public class RentACatUnitTest {
 	public void testGetCatNumCats3() {
 		// TODO: Fill in
 		try {
-		when(c1.getId()).thenReturn(1);
-		when(c2.getId()).thenReturn(2);
-		when(c3.getId()).thenReturn(3);
 		Method getCat = r.getClass().getDeclaredMethod("getCat", int.class);
 		getCat.setAccessible(true);
 		r.addCat(c1);
@@ -180,9 +181,6 @@ public class RentACatUnitTest {
 	@Test
 	public void testListCatsNumCats3() {
 		// TODO: Fill in
-		when(c1.getId()).thenReturn(1);
-		when(c2.getId()).thenReturn(2);
-		when(c3.getId()).thenReturn(3);
 		when(c1.toString()).thenReturn("ID 1. Jennyanydots");
 		when(c2.toString()).thenReturn("ID 2. Old Deuteronomy");
 		when(c3.toString()).thenReturn("ID 3. Mistoffelees");
@@ -211,10 +209,6 @@ public class RentACatUnitTest {
 	@Test
 	public void testRenameFailureNumCats0() {
 		// TODO: Fill in
-		when(c1.getId()).thenReturn(1);
-		when(c2.getId()).thenReturn(2);
-		when(c3.getId()).thenReturn(3);
-		when(c2.getName()).thenReturn("Old Deuteronomy");
 		boolean ret = r.renameCat(2, "Garfield");
 		assertFalse(ret);
 		assertNotEquals("Garfield", c2.getName());
@@ -238,10 +232,6 @@ public class RentACatUnitTest {
 	@Test
 	public void testRenameNumCat3() {
 		// TODO: Fill in
-		when(c1.getId()).thenReturn(1);
-		when(c2.getId()).thenReturn(2);
-		when(c3.getId()).thenReturn(3);
-		when(c2.getName()).thenReturn("Old Deuteronomy");
 		r.addCat(c1);
 		r.addCat(c2);
 		r.addCat(c3);
@@ -268,11 +258,7 @@ public class RentACatUnitTest {
 	@Test
 	public void testRentCatNumCats3() {
 		// TODO: Fill in
-		when(c1.getId()).thenReturn(1);
-		when(c2.getId()).thenReturn(2);
-		when(c3.getId()).thenReturn(3);
 		when(c2.getRented()).thenReturn(false);
-		when(c2.getName()).thenReturn("Old Deuteronomy");
 		r.addCat(c1);
 		r.addCat(c2);
 		r.addCat(c3);
@@ -301,17 +287,13 @@ public class RentACatUnitTest {
 	@Test
 	public void testRentCatFailureNumCats3() {
 		// TODO: Fill in
-		when(c1.getId()).thenReturn(1);
-		when(c2.getId()).thenReturn(2);
-		when(c3.getId()).thenReturn(3);
 		r.addCat(c1);
 		when(c2.getRented()).thenReturn(true);
-		when(c2.getName()).thenReturn("Old Deuteronomy");
 		r.addCat(c2);
 		r.addCat(c3);
 		boolean ret = r.rentCat(2);
 		assertFalse(ret);
-		assertTrue(c2.getRented());
+		verify(c2).getRented();
 		assertEquals("Sorry, Old Deuteronomy is not here!" + newline, out.toString());
 	}
 
@@ -334,12 +316,8 @@ public class RentACatUnitTest {
 	@Test
 	public void testReturnCatNumCats3() {
 		// TODO: Fill in
-		when(c1.getId()).thenReturn(1);
-		when(c2.getId()).thenReturn(2);
-		when(c3.getId()).thenReturn(3);
 		r.addCat(c1);
 		when(c2.getRented()).thenReturn(true);
-		when(c2.getName()).thenReturn("Old Deuteronomy");
 		r.addCat(c2);
 		r.addCat(c3);
 		boolean ret = r.returnCat(2);
@@ -367,11 +345,7 @@ public class RentACatUnitTest {
 	@Test
 	public void testReturnFailureCatNumCats3() {
 		// TODO: Fill in
-		when(c1.getId()).thenReturn(1);
-		when(c2.getId()).thenReturn(2);
-		when(c3.getId()).thenReturn(3);
 		when(c2.getRented()).thenReturn(false);
-		when(c2.getName()).thenReturn("Old Deuteronomy");
 		r.addCat(c1);
 		r.addCat(c2);
 		r.addCat(c3);
