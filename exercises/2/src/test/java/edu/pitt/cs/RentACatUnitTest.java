@@ -51,20 +51,14 @@ public class RentACatUnitTest {
 		// Passing InstanceType.MOCK as the first parameter will create a mock cat using Mockito.
 		// Which type is the correct choice for this unit test?  Again, I'll leave it up to you.
 		// TODO: Fill in
-		c1 = Cat.createInstance(InstanceType.MOCK, 1, "Jennyanydots"); 
-		when(c1.getId()).thenReturn(1);
-		when(c1.getName()).thenReturn("Jennyanydots");
+		c1 = Cat.createInstance(InstanceType.IMPL, 1, "Jennyanydots"); 
 
 		// 3. Create a Cat with ID 2 and name "Old Deuteronomy", assign to c2 using a call to Cat.createInstance(InstanceType, int, String).
 		// TODO: Fill in
-		c2 = Cat.createInstance(InstanceType.MOCK, 2, "Old Deuteronomy");
-		when(c2.getId()).thenReturn(2);
-		when(c2.getName()).thenReturn("Old Deuteronomy");
+		c2 = Cat.createInstance(InstanceType.IMPL, 2, "Old Deuteronomy");
 		// 4. Create a Cat with ID 3 and name "Mistoffelees", assign to c3 using a call to Cat.createInstance(InstanceType, int, String).
 		// TODO: Fill in
-		c3 = Cat.createInstance(InstanceType.MOCK, 3, "Mistoffelees");
-		when(c3.getId()).thenReturn(3);
-		when(c3.getName()).thenReturn("Mistoffelees");
+		c3 = Cat.createInstance(InstanceType.IMPL, 3, "Mistoffelees");
 		// 5. Redirect system output from stdout to the "out" stream
 		// First, make a back up of System.out (which is the stdout to the console)
 		stdout = System.out;
@@ -181,9 +175,6 @@ public class RentACatUnitTest {
 	@Test
 	public void testListCatsNumCats3() {
 		// TODO: Fill in
-		when(c1.toString()).thenReturn("ID 1. Jennyanydots");
-		when(c2.toString()).thenReturn("ID 2. Old Deuteronomy");
-		when(c3.toString()).thenReturn("ID 3. Mistoffelees");
 		r.addCat(c1);
 		r.addCat(c2);
 		r.addCat(c3);
@@ -237,7 +228,7 @@ public class RentACatUnitTest {
 		r.addCat(c3);
 		boolean ret = r.renameCat(2, "Garfield");
 		assertTrue(ret);
-		verify(c2).renameCat("Garfield");
+		assertEquals("Garfield", c2.getName());
 	}
 
 	/**
@@ -258,13 +249,12 @@ public class RentACatUnitTest {
 	@Test
 	public void testRentCatNumCats3() {
 		// TODO: Fill in
-		when(c2.getRented()).thenReturn(false);
 		r.addCat(c1);
 		r.addCat(c2);
 		r.addCat(c3);
 		boolean ret = r.rentCat(2);
 		assertTrue(ret);
-		verify(c2).getRented();
+		assertTrue((c2.getRented()));
 		assertEquals("Old Deuteronomy has been rented." + newline, out.toString());
 	}
 
@@ -288,12 +278,12 @@ public class RentACatUnitTest {
 	public void testRentCatFailureNumCats3() {
 		// TODO: Fill in
 		r.addCat(c1);
-		when(c2.getRented()).thenReturn(true);
+		c2.rentCat();
 		r.addCat(c2);
 		r.addCat(c3);
 		boolean ret = r.rentCat(2);
 		assertFalse(ret);
-		verify(c2).getRented();
+		assertTrue((c2).getRented());
 		assertEquals("Sorry, Old Deuteronomy is not here!" + newline, out.toString());
 	}
 
@@ -317,13 +307,12 @@ public class RentACatUnitTest {
 	public void testReturnCatNumCats3() {
 		// TODO: Fill in
 		r.addCat(c1);
-		when(c2.getRented()).thenReturn(true);
+		c2.rentCat();
 		r.addCat(c2);
 		r.addCat(c3);
 		boolean ret = r.returnCat(2);
 		assertTrue(ret);
-		//assertFalse(c2.getRented());
-		verify(c2).getRented();
+		assertFalse((c2).getRented());
 		assertEquals("Welcome back, Old Deuteronomy!" + newline, out.toString());
 	}
 
@@ -345,14 +334,12 @@ public class RentACatUnitTest {
 	@Test
 	public void testReturnFailureCatNumCats3() {
 		// TODO: Fill in
-		when(c2.getRented()).thenReturn(false);
 		r.addCat(c1);
 		r.addCat(c2);
 		r.addCat(c3);
 		boolean ret = r.returnCat(2);
 		assertFalse(ret);
-		when(c2.getRented()).thenReturn(true);
-		verify(c2).getRented();
+		assertFalse(c2.getRented());
 		assertEquals("Old Deuteronomy is already here!" + newline, out.toString());
 	}
 
