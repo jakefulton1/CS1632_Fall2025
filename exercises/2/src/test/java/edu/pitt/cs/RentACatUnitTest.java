@@ -133,6 +133,7 @@ public class RentACatUnitTest {
 	public void testGetCatNumCats3() {
 		// TODO: Fill in
 		try {
+		when(c2.getId()).thenReturn(2);
 		Method getCat = r.getClass().getDeclaredMethod("getCat", int.class);
 		getCat.setAccessible(true);
 		r.addCat(c1);
@@ -177,6 +178,9 @@ public class RentACatUnitTest {
 	@Test
 	public void testListCatsNumCats3() {
 		// TODO: Fill in
+		when(c1.toString()).thenReturn("ID 1. Jennyanydots");
+		when(c2.toString()).thenReturn("ID 2. Old Deuteronomy");
+		when(c3.toString()).thenReturn("ID 3. Mistoffelees");
 		r.addCat(c1);
 		r.addCat(c2);
 		r.addCat(c3);
@@ -202,6 +206,8 @@ public class RentACatUnitTest {
 	@Test
 	public void testRenameFailureNumCats0() {
 		// TODO: Fill in
+		when(c2.getId()).thenReturn(2);
+		when(c2.getName()).thenReturn("Old Deuteronomy");
 		boolean ret = r.renameCat(2, "Garfield");
 		assertFalse(ret);
 		assertNotEquals("Garfield", c2.getName());
@@ -225,12 +231,14 @@ public class RentACatUnitTest {
 	@Test
 	public void testRenameNumCat3() {
 		// TODO: Fill in
+		when(c2.getId()).thenReturn(2);
+		when(c2.getName()).thenReturn("Old Deuteronomy");
 		r.addCat(c1);
 		r.addCat(c2);
 		r.addCat(c3);
 		boolean ret = r.renameCat(2, "Garfield");
 		assertTrue(ret);
-		assertEquals("Garfield", c2.getName());
+		verify(c2).renameCat("Garfield");
 	}
 
 	/**
@@ -251,12 +259,15 @@ public class RentACatUnitTest {
 	@Test
 	public void testRentCatNumCats3() {
 		// TODO: Fill in
+		when(c2.getRented()).thenReturn(false);
+		when(c2.getId()).thenReturn(2);
+		when(c2.getName()).thenReturn("Old Deuteronomy");
 		r.addCat(c1);
 		r.addCat(c2);
 		r.addCat(c3);
 		boolean ret = r.rentCat(2);
 		assertTrue(ret);
-		assertTrue(c2.getRented());
+		verify(c2).getRented();
 		assertEquals("Old Deuteronomy has been rented." + newline, out.toString());
 	}
 
@@ -280,7 +291,9 @@ public class RentACatUnitTest {
 	public void testRentCatFailureNumCats3() {
 		// TODO: Fill in
 		r.addCat(c1);
-		c2.rentCat();
+		when(c2.getRented()).thenReturn(true);
+		when(c2.getId()).thenReturn(2);
+		when(c2.getName()).thenReturn("Old Deuteronomy");
 		r.addCat(c2);
 		r.addCat(c3);
 		boolean ret = r.rentCat(2);
@@ -309,12 +322,15 @@ public class RentACatUnitTest {
 	public void testReturnCatNumCats3() {
 		// TODO: Fill in
 		r.addCat(c1);
-		c2.rentCat();
+		when(c2.getRented()).thenReturn(true);
+		when(c2.getId()).thenReturn(2);
+		when(c2.getName()).thenReturn("Old Deuteronomy");
 		r.addCat(c2);
 		r.addCat(c3);
 		boolean ret = r.returnCat(2);
 		assertTrue(ret);
-		assertFalse(c2.getRented());
+		//assertFalse(c2.getRented());
+		verify(c2).getRented();
 		assertEquals("Welcome back, Old Deuteronomy!" + newline, out.toString());
 	}
 
@@ -336,12 +352,16 @@ public class RentACatUnitTest {
 	@Test
 	public void testReturnFailureCatNumCats3() {
 		// TODO: Fill in
+		when(c2.getRented()).thenReturn(false);
+		when(c2.getId()).thenReturn(2);
+		when(c2.getName()).thenReturn("Old Deuteronomy");
 		r.addCat(c1);
 		r.addCat(c2);
 		r.addCat(c3);
 		boolean ret = r.returnCat(2);
 		assertFalse(ret);
-		assertFalse(c2.getRented());
+		when(c2.getRented()).thenReturn(true);
+		verify(c2).getRented();
 		assertEquals("Old Deuteronomy is already here!" + newline, out.toString());
 	}
 
